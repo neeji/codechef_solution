@@ -1,43 +1,27 @@
-#include <iostream>
-#include <vector>
-#define ll long long
-#define ull unsigned long long
-#define ui unsigned int
-
+#include <bits/stdc++.h>
 using namespace std;
-void reduce_to_one(vector<ll> &arr)
+#define ll long long int
+#define mod 1000000007
+ll dp[1000007];
+
+int main()
 {
-    if (arr.size() == 1)
-    {
-        return;
-    }
-    else
-    {
-        ll l = (arr[0] + arr[arr.size() - 1]) % 1000000007 + (arr[0] * arr[arr.size() - 1]) % 1000000007;
-        l = l % 1000000007;
-        arr.erase(arr.begin());
-        arr.erase(arr.begin() + arr.size() - 1);
-        arr.push_back(l);
-        // cout << l << " ";
-        reduce_to_one(arr);
-    }
-}
-int main(void)
-{
-    int t;
+    ll t;
     cin >> t;
+
+    dp[1] = 1;
+    for (ll i = 2; i <= 1000007; i++)
+    {
+        dp[i] = i + dp[i - 1] + (i * dp[i - 1]);
+        dp[i] = dp[i] % mod;
+    }
+
     while (t--)
     {
-        int n;
-        cin >> n;
-        vector<ll> arr(n);
-        for (int i = 1; i <= n; i++)
-        {
-            arr[i - 1] = i;
-        }
-        reduce_to_one(arr);
-        cout << arr[0] << endl;
-    }
+        ll n;
 
-    return 0;
+        cin >> n;
+        ll ans = dp[n];
+        cout << ans << endl;
+    }
 }
